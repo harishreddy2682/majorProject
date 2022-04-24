@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+$containerBackground: white;
+$formBackground: rgb(182, 182, 182);
+$buttonBackground: white;
+
+.registerRoot {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $containerBackground;
+}
+
+.form {
+    background-color: $formBackground;
+    height: fit-content;
+    width: 30vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 3vh;
+    padding: 3vw;
+    font-family: 'Baloo Bhai 2', cursive;
+
+    .registerHeading {
+        margin-bottom: 3vh;
+    }
+
+    button {
+        margin-top: 1vh;
+        width: 150px;
+        height: 40px;
+        border: none;
+        background-color: $buttonBackground;
+        cursor: pointer;
+    }
+}
+
+.inputWrapper {
+    p {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 0.6vh 0;
+        width: 3vw;
+    }
+    input {
+        border: none;
+        height: 25px;
+        width: 250px;
+        padding: 4px;
+
+        &:focus-visible {
+            outline-width: 0;
+        }
+    }
+}

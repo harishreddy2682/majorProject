@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+$containerBackground: white;
+$formBackground: rgb(182, 182, 182);
+$buttonBackground: white;
+
+.root {
+  background-color: $containerBackground;
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  font-family: "Baloo Bhai 2", cursive;
+  font-size: 14px;
+  button {
+    cursor: pointer;
+    padding: 2px;
+    margin-top: 2vh;
+    width: 90px;
+  }
+}
+
+.profileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3vw;
+}
+
+.form {
+  height: 75vh;
+  width: 40vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 2vw;
+  background-color: $formBackground;
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      padding: 3px;
+      margin: 0;
+      margin-left: 1vw;
+      width: 3vw;
+    }
+  }
+
+  input {
+    padding: 2px;
+    border-radius: 3px;
+    margin: 2px 0;
+    border: none;
+    &:focus-visible {
+      outline: none;
+    }
+    font-family: "Baloo Bhai 2", cursive;
+  }
+
+  textarea {
+    padding: 2px;
+    border-radius: 3px;
+    margin: 2px 0;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+}
+
+#btnLogout {
+  align-self: flex-end;
+  margin-right: 4.6vw;
+  margin-bottom: 2vh;
+}
