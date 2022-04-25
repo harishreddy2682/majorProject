@@ -22,7 +22,7 @@ const Login = () => {
 
     useEffect(() => {
         if(status === 'success') {
-            navigate('/profile')
+            navigate('/details')
         }
     }, [status, navigate])
 

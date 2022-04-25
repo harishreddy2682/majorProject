@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import Register from './screens/Register';
 import Login from './screens/Login';
 import Profile from './screens/Profile';
+import Details from './screens/ProfileDetails';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true
@@ -13,11 +14,11 @@ function App() {
 
   const { isError, error, isSuccess, data } = useQuery('logged-user', () => {
     return axios.get('http://localhost:5000/api/user/')
-  }, { retry: false })
+  }, {})
 
   useEffect(() => {
     if (isError) {
-      console.log(error.response.data.msg)
+      console.log(error.response.data)
     }
     if(isSuccess) {
       // console.log(data)
@@ -30,6 +31,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/' element={<Login />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/details' element={<Details />} />
 
       </Routes>
     </BrowserRouter>

@@ -2,32 +2,33 @@ import React, { useEffect, useState } from 'react'
 import styles from '../styles/Profile.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
-import { useLogout, useProfileData, useUpdateProfileDetails } from '../queryHooks/userHooks'
+import { useProfileData, useUpdateProfileDetails } from '../queryHooks/userHooks'
+import Navbar from '../components/Navbar'
 
 const Profile = () => {
 
   const navigate = useNavigate()
 
   const queryClient = useQueryClient()
-  const data = queryClient.getQueryData('logged-user')
+  const { status } = queryClient.getQueryState('logged-user')
 
   const { isSuccess: profileSuccess, data: profileData } = useProfileData()
 
 
-  const [email, setEmail] = useState(profileSuccess ? profileData.data.email : '')
-  const [phone, setPhone] = useState(profileSuccess ? profileData.data.phone: '')
-  const [graduation, setGraduation] = useState(profileSuccess ? profileData.data.graduation : {
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [graduation, setGraduation] = useState({
     year: '',
     course: '',
     institute: '',
     percentage: ''
   })
-  const [intermediate, setIntermediate] = useState(profileSuccess ? profileData.data.intermediate : {
+  const [intermediate, setIntermediate] = useState({
     year: '',
     institute: '',
     percentage: ''
   })
-  const [highSchool, setHighSchool] = useState(profileSuccess ? profileData.data.highSchool : {
+  const [highSchool, setHighSchool] = useState({
     year: '',
     institute: '',
     percentage: ''
@@ -42,15 +43,15 @@ const Profile = () => {
     title: '',
     description: ''
   }])
-  const [skills, setSkills] = useState(profileSuccess ? profileData.data.skills : '')
-  const [achievements, setAchievements] = useState(profileSuccess ? profileData.data.achievements : [])
+  const [skills, setSkills] = useState('')
+  const [achievements, setAchievements] = useState([])
   const [achievement, setAchievement] = useState('')
 
   // const [courses, setCourses] = useState(profileSuccess ? profileData.data.cources : [])
   // const [course, setCourse] = useState('')
 
-  const [gitLink, setGitLink] = useState(profileSuccess ? profileData.data.gitLink : '')
-  const [linkedin, setLinkedin] = useState(profileSuccess ? profileData.data.linkedinLink : '')
+  const [gitLink, setGitLink] = useState('')
+  const [linkedin, setLinkedin] = useState('')
 
   const addNewExperience = () => {
     const updated = [...experience, { organization: '', description: '', startDate: '', endDate: '' }]
@@ -86,41 +87,39 @@ const Profile = () => {
   //   setCourse('')
   // }
 
-  const  { mutate: updateProfile, isSuccess: updateSuccess } = useUpdateProfileDetails()
+  const { mutate: updateProfile, isSuccess: updateSuccess } = useUpdateProfileDetails()
 
   const submitHandler = () => {
     updateProfile({ email, phone, graduation, intermediate, highSchool, experience, projects, skills, achievements, gitLink, linkedin })
   }
 
-  const { mutate: logout, isSuccess: logoutSuccess } = useLogout()
-
-  const logoutHandler = () => {
-    logout()
-  }
   // console.log(updateSuccess, isFetching)
   useEffect(() => {
-    if(profileSuccess) {
+    if (profileSuccess) {
+      setEmail(profileData.data.email)
+      setPhone(profileData.data.phone)
+      setGraduation(profileData.data.graduation)
+      setIntermediate(profileData.data.intermediate)
+      setHighSchool(profileData.data.highSchool)
       setExperiences(profileData.data.experience)
       setProjects(profileData.data.projects)
+      setSkills(profileData.data.skills)
+      setAchievements(profileData.data.achievements)
+      setGitLink(profileData.data.gitLink)
+      setLinkedin(profileData.data.linkedinLink)
     }
   }, [profileSuccess, profileData])
 
   useEffect(() => {
-    if (logoutSuccess) {
+    if (status === 'error') {
       navigate('/')
     }
-  }, [logoutSuccess, navigate])
-
-  useEffect(() => {
-    if (!data) {
-      navigate('/')
-    }
-  }, [data, navigate])
+  }, [status, navigate])
 
   return (
     <div className={styles.root}>
-      { updateSuccess && <p style={{'color': 'green'}}>Update successful</p> }
-      <button onClick={logoutHandler} id={styles.btnLogout}>Logout</button>
+      <Navbar />
+      {updateSuccess && <p style={{ 'color': 'green' }}>Update successful</p>}
       <div className={styles.profileContainer}>
         <div className={styles.form}>
           <p>Email</p>
